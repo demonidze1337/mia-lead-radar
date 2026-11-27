@@ -193,6 +193,7 @@ func TestFromEnvOverrides(t *testing.T) {
 		"TELEGRAM_APP_ID":   "12345",
 		"TELEGRAM_APP_HASH": "abcdef",
 		"WEBAPP_BASE_URL":   "https://radar.example.com",
+		"ACCESS_TOKEN":      "local-code",
 		"DEBUG":             "TRUE",
 	}
 	cfg, err := FromEnv(func(key string) (string, bool) {
@@ -213,6 +214,9 @@ func TestFromEnvOverrides(t *testing.T) {
 	}
 	if cfg.WebAppBaseURL != "https://radar.example.com" || !cfg.Debug {
 		t.Fatalf("unexpected webapp/debug: %+v", cfg)
+	}
+	if cfg.AccessToken != "local-code" {
+		t.Fatalf("AccessToken = %q", cfg.AccessToken)
 	}
 }
 

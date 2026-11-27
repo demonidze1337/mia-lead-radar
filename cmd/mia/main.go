@@ -173,7 +173,11 @@ func run() error {
 		scout = telegram.NewScout(store, governor, transports[0])
 	}
 	httpServer, err := server.New(server.Deps{
-		Store:     store,
+		Store: store,
+		Auth: &server.Authenticator{
+			Store:       store,
+			AccessToken: cfg.AccessToken,
+		},
 		Bus:       bus,
 		Filter:    engine,
 		Insights:  insightService,

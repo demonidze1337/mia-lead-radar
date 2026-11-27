@@ -353,6 +353,23 @@ func keepExistingSecret(incoming, existing string) string {
 	return incoming
 }
 
+// resolveLLMAPIKey restores a masked key only when the destination provider and
+// base URL are unchanged, so a stored credential is never sent to a different
+// endpoint. An explicit value replaces the key; an empty value clears it.
+func resolveLLMAPIKey(incoming, existing domain.LLMConfig) string {
+	key := strings.TrimSpace(incoming.APIKey)
+	if key != "***" {
+		return key
+	}
+	normalize := func(value string) string {
+		return strings.ToLower(strings.TrimRight(strings.TrimSpace(value), "/"))
+	}
+	if normalize(string(incoming.Provider)) == normalize(string(existing.Provider)) && normalize(incoming.BaseURL) == normalize(existing.BaseURL) {
+		return existing.APIKey
+	}
+	return ""
+}
+
 func parseID(raw string) (int64, error) {
 	id, err := strconvParseInt(raw)
 	if err != nil || id <= 0 {

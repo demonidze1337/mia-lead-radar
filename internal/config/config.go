@@ -28,6 +28,7 @@ type Config struct {
 	TelegramAppID   int
 	TelegramAppHash string
 	WebAppBaseURL   string
+	AccessToken     string
 	Debug           bool
 }
 
@@ -62,6 +63,7 @@ func FromEnv(lookup func(key string) (string, bool)) (Config, error) {
 		DataDir:         DefaultDataDir,
 		TelegramAppHash: get("TELEGRAM_APP_HASH"),
 		WebAppBaseURL:   get("WEBAPP_BASE_URL"),
+		AccessToken:     get("ACCESS_TOKEN"),
 	}
 
 	if v := get("HTTP_ADDR"); v != "" {

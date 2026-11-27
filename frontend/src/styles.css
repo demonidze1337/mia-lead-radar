@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #070d14;
+  --panel: rgba(11, 21, 32, 0.82);
+  --edge: rgba(54, 84, 108, 0.45);
+  --mint: #34d399;
+  --cyan: #22d3ee;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(55rem 38rem at 8% -8%, rgba(34, 211, 238, 0.13), transparent 65%),
+    radial-gradient(48rem 34rem at 100% 0%, rgba(52, 211, 153, 0.1), transparent 60%),
+    radial-gradient(40rem 30rem at 55% 120%, rgba(16, 185, 129, 0.08), transparent 62%);
+  background-attachment: fixed;
+  color: #e6f1f7;
+  font-feature-settings: 'cv02', 'cv03', 'cv04';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.35);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(52, 211, 153, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.25);
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-white/[0.07] bg-panel/70 shadow-glow backdrop-blur;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-white/10 bg-ink/70 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-mint/60 focus:ring-2 focus:ring-mint/10;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-medium text-slate-100 transition-colors duration-150 hover:border-mint/40 hover:bg-mint/[0.08] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-primary {
+    @apply btn border-mint/40 bg-mint/15 text-mint hover:bg-mint/25;
+  }
+
+  .btn-danger {
+    @apply btn border-rose-400/30 bg-rose-400/10 text-rose-200 hover:bg-rose-400/20;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-slate-300;
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-slate-400;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-white/[0.06];
+  }
+}
+
+.mesh-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(22rem 22rem at 18% 18%, rgba(34, 211, 238, 0.09), transparent 70%),
+    radial-gradient(26rem 26rem at 82% 12%, rgba(52, 211, 153, 0.07), transparent 72%);
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+.safe-bottom {
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

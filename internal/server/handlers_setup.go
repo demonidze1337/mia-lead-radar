@@ -39,6 +39,9 @@ func (s *Server) handleLLMTest(w http.ResponseWriter, r *http.Request) {
 	if !decodeJSON(w, r, &cfg) {
 		return
 	}
+	if settings, err := s.deps.Store.GetSettings(r.Context()); err == nil {
+		cfg.APIKey = resolveLLMAPIKey(cfg, settings.LLM)
+	}
 	client, err := llm.NewClient(cfg)
 	if err != nil {
 		writeError(w, err)
@@ -64,7 +67,7 @@ func (s *Server) handleLLMSave(w http.ResponseWriter, r *http.Request) {
 		writeError(w, err)
 		return
 	}
-	cfg.APIKey = keepExistingSecret(cfg.APIKey, settings.LLM.APIKey)
+	cfg.APIKey = resolveLLMAPIKey(cfg, settings.LLM)
 	settings.LLM = cfg
 	if err := s.deps.Store.SaveSettings(r.Context(), settings); err != nil {
 		writeError(w, err)
@@ -246,7 +249,7 @@ func (s *Server) handlePutSettings(w http.ResponseWriter, r *http.Request) {
 		writeError(w, err)
 		return
 	}
-	incoming.LLM.APIKey = keepExistingSecret(incoming.LLM.APIKey, existing.LLM.APIKey)
+	incoming.LLM.APIKey = resolveLLMAPIKey(incoming.LLM, existing.LLM)
 	incoming.OwnerBotToken = keepExistingSecret(incoming.OwnerBotToken, existing.OwnerBotToken)
 	if err := s.deps.Store.SaveSettings(r.Context(), incoming); err != nil {
 		writeError(w, err)

@@ -36,3 +36,6 @@ Thumbs.db
 .idea/
 .vscode/
 .cursor/
+
+# Local data root
+/data/
