@@ -3,6 +3,7 @@ module github.com/demonidze1337/mia-lead-radar
 go 1.27
 
 require (
+	github.com/coder/websocket v1.8.15
 	github.com/gotd/td v0.166.1
 	golang.org/x/sys v0.49.0
 	golang.org/x/text v0.44.0
@@ -13,7 +14,6 @@ require (
 	github.com/andybalholm/brotli v1.2.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/coder/websocket v1.8.15 // indirect
 	github.com/dlclark/regexp2 v1.12.0 // indirect
 	github.com/dustin/go-humanize v1.1.0 // indirect
 	github.com/fatih/color v1.19.0 // indirect
